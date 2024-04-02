@@ -1,0 +1,40 @@
+
+.login-page {
+    padding: 1rem;
+    background-color: black;
+    margin-top: 10rem;
+}
+
+body {
+    background-color: black;
+    color: azure;
+
+}
+
+
+body .login-page {
+    text-align: center;
+}
+
+.area-form {
+    color: black;
+}
+
+.footer {
+    display: flex;
+   padding: 20px;
+
+}
+
+.footer{
+  
+    background-color: rgb(0, 0, 0);
+    padding: 1.7rem;
+   display: flex;
+
+}
+
+.footer-area h2{
+    font-size: 13px;
+    display: flex;
+}
