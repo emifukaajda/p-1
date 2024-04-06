@@ -1,0 +1,91 @@
+.home-1 {
+    margin-top: 1.1rem;
+    padding:8rem 7%;
+    display: flex;
+
+}
+
+.typing-animation {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+.only-card {
+    height: 50vh;
+    
+}
+
+
+.f-sz {
+    font-size: 2rem;
+    margin: ;
+}
+
+.footer-area-footer {
+    margin-top: 0.1rem;
+    padding: 1rem;
+}
+
+
+.artikel-group {
+    padding: 1rem;
+    margin-top: 10rem;
+    
+}
+
+.bungkus-grup {
+    background-color: rgb(65, 70, 67);
+    height: 120px;
+    width: auto;
+    color: aliceblue;
+    border: 1px solid white;
+    border-radius: 12px;
+    padding-top: 1rem;
+
+}
+#gambar-utama {
+    box-shadow: 5px 9px snow;
+    cursor: pointer;
+  
+}
+
+#gambar-utama:hover {
+    background-color: rgb(191, 191, 191);
+    box-shadow: 5px 9px rgb(25, 59, 58);
+   
+}
+.sosmed-area{
+    background-color: #ffffff;
+    color: black;
+    text-decoration: none;
+
+}
+
+.sosmed-area p{
+    color: black;
+}
+
+.skill-area {
+    height: 58vh;
+}
+
+.lurus {
+    border-left: 1px solid rgb(255, 255, 255); /* Menggunakan border-left untuk garis vertikal */
+    height: 100px; /* Menentukan tinggi garis */
+
+}
+
+.skill-area {
+    padding: 5rem;
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 1.7rem;
+    box-shadow: 2px 5px white;
+
+
+}

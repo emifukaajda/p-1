@@ -1,0 +1,39 @@
+.update-artikel {
+    padding: 1.7rem 7%;
+    font-size: 13px;
+    margin-top: 10rem;
+    width: 100%;
+    height: 70vh;
+}
+
+.update-artikel p {
+    color: aliceblue;
+    font-size: 1rem;
+}
+
+.update-artikel h1 {
+    font-size: 30px;
+    color: rgb(250, 250, 250);
+}
+
+.blockquote-footer {
+    font-size: 13px;
+}
+
+.gambar-group {
+    border: 2px solid white;
+    border-radius: 1px;
+
+
+}
+
+.wrapper {
+
+
+}
+
+.Area-card {
+    
+    gap: 2rem;
+    padding: 1rem;
+}
