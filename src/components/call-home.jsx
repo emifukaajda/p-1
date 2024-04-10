@@ -1,29 +1,31 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Card, Image, Row, Col, Navbar, Container, Nav, Form, Button, NavDropdown, CardText, CardImg, CardFooter    } from 'react-bootstrap';
+import {Card, Image, Row, Col, Navbar, Container, Nav, Form, Button, NavDropdown, CardText, CardImg, CardFooter, Spinner, Modal } from 'react-bootstrap'; // Added Modal from react-bootstrap
 import '../style/p-home.css';
-import { FaFacebookF } from "react-icons/fa";
-import { RiInstagramFill } from "react-icons/ri";
-import { AiFillFilePpt } from "react-icons/ai";
-import { AiFillSafetyCertificate } from "react-icons/ai";
+import { FaFacebookF, FaGithub, FaUser } from "react-icons/fa";
+import { RiInstagramFill, RiVerifiedBadgeFill } from "react-icons/ri";
+import { AiFillFilePpt, AiFillSafetyCertificate } from "react-icons/ai";
 import { MdVerified } from "react-icons/md";
 import { FiHome } from "react-icons/fi";
-import { RiVerifiedBadgeFill } from "react-icons/ri";
-import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { CgUserlane } from "react-icons/cg";
-import { FaUser } from "react-icons/fa6";
 import gambar from'../img/1.jpg';
 import React, { useState, useEffect } from 'react';
 import XHm from '../pages/home';
-
+import { useNavigate  } from 'react-router-dom'; // Import useNavigate for navigation
+import { HelmetProvider, Helmet } from 'react-helmet-async'
 
 const TypingAnimation = () => {
   const [text, setText] = useState('');
   const words = ['Febryanus', 'Tambing'];
   const [wordIndex, setWordIndex] = useState(0);
   const [letterIndex, setLetterIndex] = useState(0);
+  const [loading, setLoading] = useState(false); // Added state for loading
+  const [buttonLoading, setButtonLoading] = useState(null); // State to track which button is loading
+  const navigate = useNavigate (); // Initialize useNavigate
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false); // State for controlling the welcome modal visibility
 
   useEffect(() => {
+    setShowWelcomeModal(true); // Show welcome modal when the component mounts
     const interval = setInterval(() => {
       if (wordIndex < words.length) {
         if (letterIndex < words[wordIndex].length) {
@@ -39,11 +41,50 @@ const TypingAnimation = () => {
       }
     }, 200);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      setShowWelcomeModal(false); // Hide welcome modal when the component unmounts
+    };
   }, [wordIndex, letterIndex]);
 
+  // Function to handle button click for specific page navigation
+  const handleButtonClick  = (page, buttonId) => {
+    setButtonLoading(buttonId); // Set loading state for the clicked button
+    setTimeout(() => {
+      setButtonLoading(null); // Reset loading state after navigation
+      navigate(page); // Navigate to the specified page
+    }, 2000); // Set timeout for 2 seconds for demonstration
+  };
+    
+  
     return (
+      
         <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Home - Febryan.id</title>
+          <link rel="icon" href="/" />
+          <meta name="description" content="Explore the journey of Febryanus Tambing, a Junior Web Developer passionate about Crypto Currency and Programming." />
+          <meta name="keywords" content="Febryanus Tambing, Web Developer, Crypto Currency, Programming, Computer Science, Palopo" />
+        </Helmet>
+        </HelmetProvider>
+      
+        {/* Welcome Modal */}
+        <div className="bg-dark">
+        <Modal show={showWelcomeModal} className='dark' onHide={() => setShowWelcomeModal(false)}>
+          <Modal.Header closeButton style={{color: 'white'}}>
+            <Modal.Title style={{color: 'gray'}}>Welcome!</Modal.Title>
+          </Modal.Header>
+          
+          <Modal.Body style={{color: 'gray'}}>Welcome to the website! We hope you enjoy your visit.</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowWelcomeModal(false)}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        </div>
+        {/* End of Welcome Modal */}
         
         {/* area navbar */}
         <div className="navbar-home">
@@ -59,7 +100,7 @@ const TypingAnimation = () => {
             navbarScroll
           >
             <Nav.Link href="#action1" className='text-white'>Project</Nav.Link>
-            <Nav.Link href="#action2" className='text-white'>Whitepaper</Nav.Link>
+            <Nav.Link href='/blog' className='text-white'>Blog</Nav.Link>
             <Nav.Link href="#action2" className='text-white'>Kelas 1U</Nav.Link>
             <Nav.Link href="#action2" className='text-white'>Kelas 2Q</Nav.Link>
             <Nav.Link href="#" disabled>
@@ -87,9 +128,11 @@ const TypingAnimation = () => {
 
                 <h1 className='font-monospace text-sm-start'> I Am {text}<MdVerified /> </h1>
                 
-                <p  className='font-monospace'>I am a Junior Web Debeloper with a passion on Crypto Currency and Programming. I am currently studying Computer Science at Cokroaminoto Palopo University in Palopo, South Sulawesi, Indonesia. Outside the University, I spend time with my community on the telegram channel `Cryptocurrency Analysis`. </p>
+                <p  className='font-monospace'>I am a Junior Web Developer with a passion for Crypto Currency and Programming. I am currently studying Computer Science at Cokroaminoto Palopo University in Palopo, South Sulawesi, Indonesia. Outside the University, I spend time with my community on the telegram channel `Cryptocurrency Analysis`. </p>
              
-                <Button className='w-50 h-auto font-monospace  p-2' variant='dark'>Visit</Button>
+                <Button className='w-50 h-auto font-monospace  p-2' variant='dark' onClick={() => handleButtonClick('/next-page', 'visit')}>
+                  {buttonLoading === 'visit' ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Visit'}
+                </Button>
               </Col>
            
               <Col>
@@ -107,7 +150,7 @@ const TypingAnimation = () => {
             <Container>
               <Row xs={2} lg={2}>
                 <Col>
-                  <h1>Myskill
+                  <h1>My Skills
                  
                   </h1>
                  
@@ -115,11 +158,10 @@ const TypingAnimation = () => {
              
                 <Col>
                  
-                   <p>Html</p>
-                   <p>Css</p>
-                   <p>React Js</p>
-                   <p>Java Script</p>
-                   <p>Html</p>
+                   <p>HTML</p>
+                   <p>CSS</p>
+                   <p>React JS</p>
+                   <p>JavaScript</p>
 
                 </Col>
               </Row>
@@ -135,7 +177,7 @@ const TypingAnimation = () => {
             <Container>
               <Row>
                 <Col>
-                <h1 className='text-center p-5'>List project</h1>
+                <h1 className='text-center p-5'>List of Projects</h1>
                 </Col>
               </Row>
 
@@ -145,9 +187,11 @@ const TypingAnimation = () => {
                <Card>
                <Card.Img variant="top" src={gambar}/>
                   <Card.Body>
-                    <Card.Title>Aplikasi Todolist - berbasis web</Card.Title>
-                    <Card.Text>Project 1 saya yang dimana saya membuat Aplikasi </Card.Text>
-                    <Button className='w-50' variant='dark'>Visit</Button>
+                    <Card.Title>Web-based Todolist App</Card.Title>
+                    <Card.Text>My first project where I created a Todolist Application</Card.Text>
+                    <Button className='w-50' variant='dark' onClick={() => handleButtonClick('/project-1', 'project1')}>
+                      {buttonLoading === 'project1' ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Visit'}
+                    </Button>
                     </Card.Body>
                </Card>
                </Col>
@@ -156,8 +200,10 @@ const TypingAnimation = () => {
                <Card.Img variant="top" src="https://th.bing.com/th/id/OIP.wi8gjQu2ZGUR3hiJmUJuwwAAAA?rs=1&pid=ImgDetMain"/>
                   <Card.Body>
                     <Card.Title>Jevryzn</Card.Title>
-                    <Card.Text>Saya seorang marketing dari website tokonomicsanime</Card.Text>
-                    <Button className='w-50' variant='dark'>Visit</Button>
+                    <Card.Text>I am a marketer for the website tokonomicsanime</Card.Text>
+                    <Button className='w-50' variant='dark' onClick={() => handleButtonClick('/project-2', 'project2')}>
+                      {buttonLoading === 'project2' ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Visit'}
+                    </Button>
                     </Card.Body>
             
                </Card>
@@ -167,47 +213,64 @@ const TypingAnimation = () => {
                <Card.Img variant="top" src="https://th.bing.com/th/id/OIP.oF1rfA1m_JwlAD1XHQNNHwHaHa?w=512&h=512&rs=1&pid=ImgDetMain"/>
                   <Card.Body>
                     <Card.Title>Klycnine</Card.Title>
-                    <Card.Text>Saya seorang marketing tokonomicsanime</Card.Text>
-                    <Button className='w-50' variant='dark'>Visit</Button>
+                    <Card.Text>I am a marketer for tokonomicsanime</Card.Text>
+                    <Button className='w-50' variant='dark' onClick={() => handleButtonClick('/project-3', 'project3')}>
+                    {buttonLoading === 'project3' ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Visit'}
+                    </Button>
                     </Card.Body>
                </Card>
                </Col>
-               <Col lg='2'>
-              <Card>
-               <Card.Img id='gambar-utama' variant="top" src="https://pbs.twimg.com/profile_images/906802444935454720/gmjjpWy6_400x400.jpg"/>
-                  <Card.Body>
-                    <Card.Title>Febryan</Card.Title>
-                    <Card.Text>Saya seorang penulis tokonomicsanime</Card.Text>
-                    <Button className='w-50' variant='dark'>Visit</Button>
-                    </Card.Body>
-            
-               </Card>
-              </Col>
               <Col lg='2'>
                <Card>
-               <Card.Img variant="top" src="https://th.bing.com/th/id/OIP.kQdZzv14JddtV-emaI9WSgHaHa?w=768&h=768&rs=1&pid=ImgDetMain"/>
+               <Card.Img variant="top" src="https://th.bing.com/th/id/OIP.oF1rfA1m_JwlAD1XHQNNHwHaHa?w=512&h=512&rs=1&pid=ImgDetMain"/>
                   <Card.Body>
-                    <Card.Title>Cosplay</Card.Title>
-                    <Card.Text>Lorem</Card.Text>
-                    <Button className='w-50' variant='dark'>Visit</Button>
+                    <Card.Title>Klycnine</Card.Title>
+                    <Card.Text>I am a marketer for tokonomicsanime</Card.Text>
+                    <Button className='w-50' variant='dark' onClick={() => handleButtonClick('/project-3', 'project4')}>
+                    {buttonLoading === 'project4' ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Visit'}
+                    </Button>
                     </Card.Body>
                </Card>
                </Col>
-               <Col lg='2'>
-              <Card>
-               <Card.Img variant="top" src="https://th.bing.com/th/id/OIP.jkVr8KC5V1RXWguKPu4AOQHaHa?w=800&h=800&rs=1&pid=ImgDetMain"/>
+              <Col lg='2'>
+               <Card>
+               <Card.Img variant="top" src="https://th.bing.com/th/id/OIP.oF1rfA1m_JwlAD1XHQNNHwHaHa?w=512&h=512&rs=1&pid=ImgDetMain"/>
                   <Card.Body>
-                    <Card.Title>Gemfrix</Card.Title>
-                    <Card.Text>Saya seorang seo utama di tokonomicsanime</Card.Text>
-                    <Button className='w-50' variant='dark'>Visit</Button>
+                    <Card.Title>Klycnine</Card.Title>
+                    <Card.Text>I am a marketer for tokonomicsanime</Card.Text>
+                    <Button className='w-50' variant='dark' onClick={() => handleButtonClick('/project-3', 'project5')}>
+                    {buttonLoading === 'project5' ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Visit'}
+                    </Button>
                     </Card.Body>
-            
                </Card>
-              </Col>
+               </Col>
+              <Col lg='2'>
+               <Card>
+               <Card.Img variant="top" src="https://th.bing.com/th/id/OIP.oF1rfA1m_JwlAD1XHQNNHwHaHa?w=512&h=512&rs=1&pid=ImgDetMain"/>
+                  <Card.Body>
+                    <Card.Title>Klycnine</Card.Title>
+                    <Card.Text>I am a marketer for tokonomicsanime</Card.Text>
+                    <Button className='w-50' variant='dark' onClick={() => handleButtonClick('/project-3', 'project6')}>
+                    {buttonLoading === 'project6' ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Visit'}
+                    </Button>
+                    </Card.Body>
+               </Card>
+               </Col>
+              <Col lg='2'>
+               <Card>
+               <Card.Img variant="top" src="https://th.bing.com/th/id/OIP.oF1rfA1m_JwlAD1XHQNNHwHaHa?w=512&h=512&rs=1&pid=ImgDetMain"/>
+                  <Card.Body>
+                    <Card.Title>Klycnine</Card.Title>
+                    <Card.Text>I am a marketer for tokonomicsanime</Card.Text>
+                    <Button className='w-50' variant='dark' onClick={() => handleButtonClick('/project-3', 'project3')}>
+                    {buttonLoading === 'project7' ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Visit'}
+                    </Button>
+                    </Card.Body>
+               </Card>
+               </Col>
               
             </Row>
             </Container>
-
             {/* End Card Area */}
 
             {/* Footer */}
@@ -226,7 +289,7 @@ const TypingAnimation = () => {
             {/* End Footer */}
 
 
-             {/* Sosialmedia */}
+             {/* Social Media */}
           <div className="sosmed-area">
             <Container>
               <Row xs={1} lg={1}>
@@ -241,7 +304,7 @@ const TypingAnimation = () => {
                 </Nav.Item>
                     <Nav.Item>
                  <Nav.Link eventKey="link-1">
-                 <p className='font-monospace'>Artikel</p>
+                 <p className='font-monospace'>Article</p>
                  </Nav.Link>
         </Nav.Item>
         <Nav.Item>
@@ -256,7 +319,7 @@ const TypingAnimation = () => {
         </Nav.Item>
 
       </Nav>
-      <p className="text-center mt-4 mb-4 font-monospace">Follow Sosmed</p>
+      <p className="text-center mt-4 mb-4 font-monospace">Follow Us on Social Media</p>
       <div className="font-color">
       <Nav className="justify-content-end"  activeKey="/home">
       <Nav.Item>
@@ -297,11 +360,14 @@ const TypingAnimation = () => {
             </Container>
           </div>
 
-          {/* End Sosial Media */}
+          {/* End Social Media */}
           </div>
 
         </>
     )
-};
+    
+    };
 
 export default TypingAnimation;
+
+

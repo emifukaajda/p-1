@@ -1,0 +1,21 @@
+.artikel-security {
+    width: 50%;
+}
+
+.artikel-1-update-group {
+    padding: 1.7rem;
+    font-family: monospace;
+    font-size: 5px;
+}
+
+.artikel-1-update-group h1 {
+    font-size: 35px;
+}
+
+.artikel-1-security {
+    background-color: cadetblue;
+}
+
+.semuanya-artikel {
+    padding: 1rem;
+}
